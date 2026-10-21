@@ -19,7 +19,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
 
   return (
     <h2
-      className={`text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-theme-text-main font-display ${alignmentClass} ${className}`}
+      className={`text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-theme-text-main ${alignmentClass} ${className}`}
     >
       {title}
     </h2>

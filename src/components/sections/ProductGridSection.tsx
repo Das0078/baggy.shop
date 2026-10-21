@@ -98,17 +98,17 @@ export const ProductGridSection: React.FC<ProductGridSectionProps> = ({
   };
 
   return (
-    <section id={id} className="py-12 md:py-18 overflow-hidden select-none w-full">
+    <section id={id} className="product-grid-section font-jakarta font-sans py-12 md:py-18 overflow-hidden select-none w-full">
       {/* Top Header Row with Title and Explore link */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 md:mb-10">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div ref={titleContainerRef}>
-            <SectionHeader title={title} align="left" />
+            <SectionHeader title={title} align="left" className="font-jakarta tracking-tight" />
           </div>
 
           <a
             href="#compare"
-            className="text-xs sm:text-sm font-semibold text-theme-primary hover:text-coffee-600 transition-colors flex items-center gap-1 group self-start sm:self-auto"
+            className="text-xs sm:text-sm font-semibold text-theme-primary hover:text-coffee-600 transition-colors flex items-center gap-1 group self-start sm:self-auto font-jakarta"
           >
             <span>Explore all {title.toLowerCase()}</span>
             <FiChevronRight
@@ -157,7 +157,7 @@ export const ProductGridSection: React.FC<ProductGridSectionProps> = ({
           <Button
             variant="outline"
             size="md"
-            className="w-full sm:w-auto min-w-[218px] py-3.5 text-sm sm:text-base font-semibold rounded-full shadow-2xs"
+            className="w-full sm:w-auto min-w-[218px] py-3.5 text-sm sm:text-base font-semibold rounded-full shadow-2xs font-jakarta"
           >
             View All
           </Button>

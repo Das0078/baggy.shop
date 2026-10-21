@@ -38,8 +38,9 @@ export default {
         }
       },
       fontFamily: {
+        jakarta: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
         display: ['"Integral CF"', '"Montserrat"', '"Cabinet Grotesk"', 'sans-serif'],
-        sans: ['"Satoshi"', '"Inter"', 'system-ui', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', '"Satoshi"', '"Inter"', 'system-ui', 'sans-serif'],
       }
     },
   },

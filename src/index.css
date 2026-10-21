@@ -31,6 +31,32 @@ h1, h2, h3, h4, .font-display {
   letter-spacing: -0.02em;
 }
 
+/* Strictly enforce Plus Jakarta Sans for ProductGridSection (New Arrivals & Top Selling) and ExperienceSection */
+.product-grid-section,
+.product-grid-section h1,
+.product-grid-section h2,
+.product-grid-section h3,
+.product-grid-section h4,
+.product-grid-section p,
+.product-grid-section span,
+.product-grid-section a,
+.product-grid-section button,
+.product-grid-section .font-display,
+.product-grid-section *,
+.experience-section,
+.experience-section h1,
+.experience-section h2,
+.experience-section h3,
+.experience-section h4,
+.experience-section p,
+.experience-section span,
+.experience-section a,
+.experience-section button,
+.experience-section .font-display,
+.experience-section * {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
 /* Hide scrollbar for clean carousels while keeping functionality */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

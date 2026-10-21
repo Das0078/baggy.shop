@@ -341,7 +341,7 @@ export const ExperienceSection: React.FC = () => {
     <section
       ref={sectionRef}
       aria-label="baGGy Immersive Scroll Experience"
-      className="relative w-full bg-black select-none"
+      className="experience-section font-jakarta font-sans relative w-full bg-black select-none"
     >
       {/* Pinned Viewport Container (Sticky 100vh) */}
       <div className="sticky top-0 w-full h-screen overflow-hidden z-10">
@@ -380,10 +380,10 @@ export const ExperienceSection: React.FC = () => {
                 {/* Main Foreground Content Layer */}
                 <div className="relative z-10 w-full h-full flex flex-col justify-between p-5 sm:p-8 md:p-12 lg:p-14">
                   {/* Top Bar: Brand Identifier and Quick Action */}
-                  <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center justify-between w-full font-jakarta">
                     <div className="flex items-center gap-3">
                       <span
-                        className={`text-xs sm:text-sm font-extrabold tracking-[0.25em] uppercase px-3.5 py-1 rounded-full border backdrop-blur-sm ${
+                        className={`text-xs sm:text-sm font-jakarta font-extrabold tracking-[0.25em] uppercase px-3.5 py-1 rounded-full border backdrop-blur-sm ${
                           isDark
                             ? 'text-white/85 border-white/20 bg-white/10'
                             : 'text-[#26150b]/85 border-black/15 bg-black/5'
@@ -392,7 +392,7 @@ export const ExperienceSection: React.FC = () => {
                         {frame.category}
                       </span>
                       <span
-                        className={`hidden sm:inline-block text-xs font-mono tracking-widest ${
+                        className={`hidden sm:inline-block text-xs font-jakarta font-semibold tracking-widest ${
                           isDark ? 'text-white/45' : 'text-black/45'
                         }`}
                       >
@@ -403,7 +403,7 @@ export const ExperienceSection: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => navigate(frame.targetUrl)}
-                      className={`group inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold tracking-wide uppercase px-4 sm:px-5 py-2 rounded-full transition-all duration-300 cursor-pointer active:scale-95 shadow-md ${
+                      className={`group inline-flex items-center gap-1.5 text-xs sm:text-sm font-jakarta font-semibold tracking-wide uppercase px-4 sm:px-5 py-2 rounded-full transition-all duration-300 cursor-pointer active:scale-95 shadow-md ${
                         isDark
                           ? 'bg-white text-black hover:bg-neutral-200'
                           : 'bg-[#26150b] text-white hover:bg-[#432818]'
@@ -439,17 +439,17 @@ export const ExperienceSection: React.FC = () => {
                           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none" />
 
                           {/* Card Text Content */}
-                          <div className="absolute inset-x-0 bottom-0 p-3 sm:p-5 text-white flex flex-col justify-end">
+                          <div className="absolute inset-x-0 bottom-0 p-3 sm:p-5 text-white flex flex-col justify-end font-jakarta">
                             <span
                               style={{ color: frame.accentColor }}
-                              className="text-[10px] sm:text-xs font-bold tracking-widest uppercase mb-0.5"
+                              className="text-[10px] sm:text-xs font-jakarta font-bold tracking-widest uppercase mb-0.5"
                             >
                               {card.badge}
                             </span>
-                            <h4 className="text-sm sm:text-base md:text-lg font-bold tracking-tight text-white leading-tight">
+                            <h4 className="text-sm sm:text-base md:text-lg font-jakarta font-bold tracking-tight text-white leading-tight">
                               {card.title}
                             </h4>
-                            <p className="text-[11px] sm:text-xs text-white/70 font-normal line-clamp-1 mt-0.5">
+                            <p className="text-[11px] sm:text-xs text-white/70 font-jakarta font-medium line-clamp-1 mt-0.5">
                               {card.subtitle}
                             </p>
                           </div>
@@ -459,13 +459,13 @@ export const ExperienceSection: React.FC = () => {
                   </div>
 
                   {/* Bottom: Editorial Typography Title on Left, Subtitles on Right */}
-                  <div className="w-full flex flex-col md:flex-row md:items-end justify-between gap-6 pt-4 border-t border-white/10">
+                  <div className="w-full flex flex-col md:flex-row md:items-end justify-between gap-6 pt-4 border-t border-white/10 font-jakarta">
                     {/* Big Bold Headline with Masked Line Wrappers */}
                     <div className="flex flex-col">
                       <div className="overflow-hidden">
                         <h3
                           data-line="true"
-                          className={`font-display font-black text-4xl sm:text-6xl md:text-7xl lg:text-[76px] tracking-tight leading-[0.92] uppercase will-change-transform ${
+                          className={`font-jakarta font-extrabold text-4xl sm:text-6xl md:text-7xl lg:text-[76px] tracking-tight leading-[0.92] uppercase will-change-transform ${
                             isDark ? 'text-white' : 'text-[#1d1d1f]'
                           }`}
                         >
@@ -475,7 +475,7 @@ export const ExperienceSection: React.FC = () => {
                       <div className="overflow-hidden">
                         <h3
                           data-line="true"
-                          className="font-display font-black text-4xl sm:text-6xl md:text-7xl lg:text-[76px] tracking-tight leading-[0.92] uppercase will-change-transform"
+                          className="font-jakarta font-extrabold text-4xl sm:text-6xl md:text-7xl lg:text-[76px] tracking-tight leading-[0.92] uppercase will-change-transform"
                         >
                           <span style={{ color: frame.accentColor }}>
                             {frame.titleAccent}&nbsp;
@@ -493,7 +493,7 @@ export const ExperienceSection: React.FC = () => {
                         <div key={line} className="overflow-hidden">
                           <p
                             data-line="true"
-                            className={`text-xs sm:text-sm font-mono tracking-widest uppercase will-change-transform ${
+                            className={`text-xs sm:text-sm font-jakarta font-medium tracking-widest uppercase will-change-transform ${
                               isDark ? 'text-white/60' : 'text-black/60'
                             }`}
                           >
