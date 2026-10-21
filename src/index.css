@@ -1,0 +1,187 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Dark Coffee palette (#432818) replacing black */
+  --color-primary: #432818;
+  --color-primary-hover: #2e1a0f;
+  --color-primary-fg: #ffffff;
+  --color-bg-light: #f2f0f1;
+  --color-bg-card: #f0eeed;
+  --color-bg-footer: #f0f0f0;
+  --color-border: rgba(67, 40, 24, 0.1);
+  --color-text-main: #432818;
+  --color-text-muted: #6d5b51;
+  --color-star: #ffc633;
+  --color-discount-bg: #ffebeb;
+  --color-discount-fg: #ff3333;
+  --color-verified: #01ab31;
+  --color-input-bg: #f0f0f0;
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* Hide scrollbar for clean carousels while keeping functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes cursorBlink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+.animate-cursor-blink {
+  animation: cursorBlink 0.85s infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Full-bleed Apple-style carousel track padding */
+.full-bleed-carousel {
+  padding-left: max(1rem, calc((100vw - 80rem) / 2 + 2rem));
+  padding-right: max(1rem, calc((100vw - 80rem) / 2 + 2rem));
+}
+
+@media (max-width: 1024px) {
+  .full-bleed-carousel {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .full-bleed-carousel {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Exclusive Club smooth auto-scrolling track */
+@keyframes exclusiveClubScroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-club-scroll {
+  display: flex;
+  width: max-content;
+  animation: exclusiveClubScroll 28s linear infinite;
+  will-change: transform;
+}
+
+.animate-club-scroll:hover {
+  animation-play-state: paused;
+}
+
+/* Home Decor smooth slow horizontal marquee */
+@keyframes decorMarquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-decor-marquee {
+  display: flex;
+  width: max-content;
+  animation: decorMarquee 35s linear infinite;
+  will-change: transform;
+}
+
+.animate-decor-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Add to Bag Uiverse-inspired Button Effect with Brand Dark Coffee Theme */
+.btn-add-to-bag {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  border-radius: 9999px;
+  isolation: isolate;
+  transition: transform 0.15s ease, box-shadow 0.25s ease;
+}
+
+.btn-add-to-bag::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: linear-gradient(
+    82.3deg,
+    #75452f 10.8%,
+    #2e1a0f 94.3%
+  );
+  transition: transform 0.475s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+
+.btn-add-to-bag:hover::before {
+  transform: scaleX(1);
+}
+
+.btn-add-to-bag:active {
+  transform: scale(0.98);
+}
+
+.btn-add-to-bag-content {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
