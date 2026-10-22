@@ -161,6 +161,27 @@ h1, h2, h3, h4, .font-display {
   animation-play-state: paused;
 }
 
+/* Testimonials smooth horizontal auto-scrolling marquee */
+@keyframes testimonialsMarquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-testimonials-marquee {
+  display: flex;
+  width: max-content;
+  animation: testimonialsMarquee 42s linear infinite;
+  will-change: transform;
+}
+
+.animate-testimonials-marquee:hover {
+  animation-play-state: paused;
+}
+
 /* Add to Bag Uiverse-inspired Button Effect with Brand Dark Coffee Theme */
 .btn-add-to-bag {
   position: relative;

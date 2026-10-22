@@ -9,10 +9,49 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface ShowcaseItem {
   image: string;
+  video?: string;
+  poster?: string;
   badge: string;
   title: string;
   subtitle: string;
 }
+
+const VideoCardMedia: React.FC<{
+  src: string;
+  poster?: string;
+  title: string;
+}> = ({ src, poster, title }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.muted = true;
+      video.defaultMuted = true;
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Autoplay was prevented; muted fallback handled
+        });
+      }
+    }
+  }, []);
+
+  return (
+    <video
+      ref={videoRef}
+      src={src}
+      poster={poster}
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="auto"
+      aria-label={title}
+      className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110 pointer-events-none"
+    />
+  );
+};
 
 interface FrameData {
   id: string;
@@ -59,6 +98,8 @@ const FRAMES: FrameData[] = [
       },
       {
         image: '/images/exclusive-club/suit-for-men.jpg',
+        video: '/videos/experience/suit-151.mp4',
+        poster: '/videos/experience/suit-poster.jpg',
         badge: 'BESPOKE BLAZER',
         title: 'Modern Cut',
         subtitle: 'Structured Espresso Weave',
@@ -100,6 +141,8 @@ const FRAMES: FrameData[] = [
       },
       {
         image: '/images/home-decor/table.png',
+        video: '/videos/experience/table-205.mp4',
+        poster: '/videos/experience/table-poster.jpg',
         badge: 'TRAVERTINE STONE',
         title: 'Low Plinth Table',
         subtitle: 'Hand-Finished Natural Marble',
@@ -130,8 +173,8 @@ const FRAMES: FrameData[] = [
     theme: 'dark',
     solidBg: '#0d1b2a', // Royal Matte Blue
     accentColor: '#e6c887',
-    bgImage: '/images/experience/exp-jewellery-blue.jpg', // TOTALLY NEW IMAGE WITH AMPLE HEADROOM
-    imgPosition: 'object-[center_top]',
+    bgImage: '/images/experience/exp-jewellery-blue-new.jpg', // High jewelry editorial on royal navy backdrop
+    imgPosition: 'object-[35%_top]',
     cards: [
       {
         image: '/images/jewellery/jewel-necklace.jpg',
@@ -141,6 +184,8 @@ const FRAMES: FrameData[] = [
       },
       {
         image: '/images/jewellery/jewel-ring.jpg',
+        video: '/videos/experience/ring-5225.mp4',
+        poster: '/videos/experience/ring-poster.jpg',
         badge: 'SOLITAIRE HALO',
         title: 'Cocktail Ring',
         subtitle: '18K Gold & Pavé Diamonds',
@@ -275,27 +320,18 @@ export const ExperienceSection: React.FC = () => {
           );
         }
 
-        // 4. Floating showcase cards sliding horizontally across the frame
+        // 4. Floating showcase cards sliding horizontally together in a straight line
         if (cardContainers.length > 0) {
-          gsap.fromTo(
-            cardContainers,
-            {
-              x: index % 2 === 0 ? '80vw' : '-80vw',
-              opacity: 0.2,
+          gsap.from(cardContainers, {
+            x: index % 2 === 0 ? '100vw' : '-100vw',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: ghostTrigger,
+              scrub: true,
+              start: '0 top',
+              end: '55% top',
             },
-            {
-              x: '0vw',
-              opacity: 1,
-              ease: 'power2.out',
-              stagger: 0.08,
-              scrollTrigger: {
-                trigger: ghostTrigger,
-                scrub: 1.2,
-                start: '0 top',
-                end: '65% top',
-              },
-            }
-          );
+          });
         }
 
         // 5. Final exit transition before next frame wipes over
@@ -319,7 +355,7 @@ export const ExperienceSection: React.FC = () => {
 
         if (cardContainers.length > 0) {
           gsap.to(cardContainers, {
-            yPercent: 10,
+            yPercent: 15,
             scrollTrigger: stFinal,
           });
         }
@@ -422,18 +458,26 @@ export const ExperienceSection: React.FC = () => {
                           key={card.title}
                           data-work="card"
                           onClick={() => navigate(frame.targetUrl)}
-                          className={`relative flex-1 aspect-[16/10] sm:aspect-[16/9] min-w-[200px] sm:min-w-[240px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group shadow-2xl transition-all duration-500 will-change-transform ${
+                          className={`relative flex-1 aspect-[16/10] sm:aspect-[16/9] min-w-[200px] sm:min-w-[240px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group shadow-2xl transition-[border-color,box-shadow] duration-300 will-change-transform ${
                             isDark
                               ? 'bg-white/5 border border-white/15 hover:border-white/40'
                               : 'bg-black/5 border border-black/10 hover:border-black/30'
                           }`}
                         >
-                          {/* Card Image */}
-                          <img
-                            src={card.image}
-                            alt={card.title}
-                            className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
-                          />
+                          {/* Card Media: Video for 2nd product (muted, autoplay, loop) or High-res Image */}
+                          {card.video ? (
+                            <VideoCardMedia
+                              src={card.video}
+                              poster={card.poster || card.image}
+                              title={card.title}
+                            />
+                          ) : (
+                            <img
+                              src={card.image}
+                              alt={card.title}
+                              className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
+                            />
+                          )}
 
                           {/* Soft bottom gradient */}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none" />
@@ -508,7 +552,7 @@ export const ExperienceSection: React.FC = () => {
                 {/* Transition Dimming Overlay */}
                 <div
                   data-work="item-overlay"
-                  className="absolute inset-0 pointer-events-none bg-black transition-opacity duration-300 opacity-0"
+                  className="absolute inset-0 pointer-events-none bg-black opacity-0"
                 />
               </div>
             );

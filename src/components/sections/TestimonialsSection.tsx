@@ -1,63 +1,101 @@
-import React, { useRef } from 'react';
-import { motion } from 'framer-motion';
-import { FiArrowLeft, FiArrowRight, FiCheck } from 'react-icons/fi';
+import React, { useState } from 'react';
+import { FiArrowLeft, FiArrowRight, FiCheck, FiPause, FiPlay } from 'react-icons/fi';
 import { testimonials } from '../../data/testimonials';
 import { StarRating } from '../common/StarRating';
 import { SectionHeader } from '../common/SectionHeader';
 
-export const TestimonialsSection: React.FC = () => {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+// Repeat 4x for continuous, seamless infinite marquee looping across all viewport widths
+const marqueeTestimonials = [
+  ...testimonials,
+  ...testimonials,
+  ...testimonials,
+  ...testimonials,
+];
 
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = 360;
-      scrollContainerRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth',
-      });
-    }
-  };
+export const TestimonialsSection: React.FC = () => {
+  const [isPaused, setIsPaused] = useState(false);
+  const [direction, setDirection] = useState<'normal' | 'reverse'>('normal');
 
   return (
     <section className="py-12 md:py-16 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 md:mb-10">
         {/* Header Row: Title on Left, Controls on Right */}
-        <div className="flex items-center justify-between mb-8 md:mb-10">
+        <div className="flex items-center justify-between">
           <SectionHeader title="OUR HAPPY CUSTOMERS" align="left" />
 
-          {/* Navigation Arrows */}
-          <div className="flex items-center gap-3">
+          {/* Marquee Navigation & Autoplay Controls */}
+          <div className="flex items-center gap-2 sm:gap-3">
             <button
-              onClick={() => scroll('left')}
-              className="p-2 sm:p-2.5 rounded-full border border-theme-border hover:border-theme-primary/50 text-theme-text-main hover:bg-theme-bg-light transition-all cursor-pointer active:scale-95"
-              aria-label="Previous testimonials"
+              type="button"
+              onClick={() => {
+                setDirection('reverse');
+                setIsPaused(false);
+              }}
+              className={`p-2 sm:p-2.5 rounded-full border transition-all cursor-pointer active:scale-95 ${
+                direction === 'reverse' && !isPaused
+                  ? 'border-theme-primary bg-theme-primary text-white shadow-sm'
+                  : 'border-theme-border hover:border-theme-primary/50 text-theme-text-main hover:bg-theme-bg-light'
+              }`}
+              aria-label="Scroll testimonials left"
+              title="Scroll left"
             >
               <FiArrowLeft size={18} />
             </button>
             <button
-              onClick={() => scroll('right')}
-              className="p-2 sm:p-2.5 rounded-full border border-theme-border hover:border-theme-primary/50 text-theme-text-main hover:bg-theme-bg-light transition-all cursor-pointer active:scale-95"
-              aria-label="Next testimonials"
+              type="button"
+              onClick={() => setIsPaused((prev) => !prev)}
+              className={`p-2 sm:p-2.5 rounded-full border transition-all cursor-pointer active:scale-95 ${
+                isPaused
+                  ? 'border-theme-primary bg-theme-primary text-white shadow-sm'
+                  : 'border-theme-border hover:border-theme-primary/50 text-theme-text-main hover:bg-theme-bg-light'
+              }`}
+              aria-label={isPaused ? 'Resume auto scroll' : 'Pause auto scroll'}
+              title={isPaused ? 'Resume auto scroll' : 'Pause auto scroll'}
+            >
+              {isPaused ? <FiPlay size={16} /> : <FiPause size={16} />}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setDirection('normal');
+                setIsPaused(false);
+              }}
+              className={`p-2 sm:p-2.5 rounded-full border transition-all cursor-pointer active:scale-95 ${
+                direction === 'normal' && !isPaused
+                  ? 'border-theme-primary bg-theme-primary text-white shadow-sm'
+                  : 'border-theme-border hover:border-theme-primary/50 text-theme-text-main hover:bg-theme-bg-light'
+              }`}
+              aria-label="Scroll testimonials right"
+              title="Scroll right"
             >
               <FiArrowRight size={18} />
             </button>
           </div>
         </div>
+      </div>
 
-        {/* Horizontal Testimonials Carousel */}
+      {/* Auto-scrolling Horizontal Marquee Track with Soft Gradient Vignettes */}
+      <div className="relative w-full overflow-hidden select-none">
+        {/* Left & Right Soft Fade Vignettes for high-end aesthetic */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-24 md:w-36 bg-gradient-to-r from-white via-white/80 to-transparent z-10" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-24 md:w-36 bg-gradient-to-l from-white via-white/80 to-transparent z-10" />
+
+        {/* Continuous Horizontal Marquee Row */}
         <div
-          ref={scrollContainerRef}
-          className="flex gap-4 sm:gap-5 overflow-x-auto no-scrollbar scroll-smooth pb-4 pt-1 snap-x snap-mandatory"
+          className="animate-testimonials-marquee flex items-stretch gap-5 sm:gap-6 py-3"
+          style={{
+            animationDirection: direction,
+            animationPlayState: isPaused ? 'paused' : undefined,
+          }}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
         >
-          {testimonials.map((t, index) => (
-            <motion.div
-              key={t.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.08 }}
-              className="min-w-[300px] sm:min-w-[340px] md:min-w-[380px] max-w-[400px] flex-shrink-0 snap-start bg-white rounded-[20px] p-6 sm:p-7 border border-theme-border flex flex-col justify-between hover:shadow-sm transition-shadow"
+          {marqueeTestimonials.map((t, index) => (
+            <div
+              key={`${t.id}-${index}`}
+              className="w-[300px] sm:w-[350px] md:w-[380px] flex-shrink-0 bg-white rounded-[20px] p-6 sm:p-7 border border-theme-border flex flex-col justify-between hover:shadow-md hover:border-theme-primary/30 hover:-translate-y-1 transition-all duration-300 select-text cursor-default"
             >
               <div>
                 {/* 5-Star Rating */}
@@ -80,10 +118,9 @@ export const TestimonialsSection: React.FC = () => {
                   &ldquo;{t.comment}&rdquo;
                 </p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
-
       </div>
     </section>
   );
